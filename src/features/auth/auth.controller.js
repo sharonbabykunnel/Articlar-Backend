@@ -51,3 +51,13 @@ export const setPreferences = asyncHadler(async (req, res) => {
         return handleError(res,500,"An unexpected errro occured. Please try again later.")
     }
 })
+
+export const logout = asyncHadler(async (req, res) => {
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0),
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+  res.status(200).json({ message: "User logged out", success:true });
+});
